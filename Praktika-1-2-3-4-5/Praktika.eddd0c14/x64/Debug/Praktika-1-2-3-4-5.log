@@ -1,2 +1,4 @@
 ﻿  Praktika-1-2-3-4-5.cpp
+C:\Users\mixol\source\repos\Praktika-public\Praktika-1-2-3-4-5\Praktika-1-2-3-4-5.cpp(116,27): warning C4390: ';': empty controlled statement found; is this the intent?
+C:\Users\mixol\source\repos\Praktika-public\Praktika-1-2-3-4-5\Praktika-1-2-3-4-5.cpp(147,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   Praktika-1-2-3-4-5.vcxproj -> C:\Users\mixol\source\repos\Praktika-public\Praktika-1-2-3-4-5\x64\Debug\Praktika-1-2-3-4-5.exe
