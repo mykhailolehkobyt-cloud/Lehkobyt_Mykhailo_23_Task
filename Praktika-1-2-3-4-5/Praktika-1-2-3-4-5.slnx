@@ -3,5 +3,6 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Project Path="../Lab_4_Strings/Lab_4_Strings.vcxproj" Id="c442589a-3890-4f5b-a31c-9208713f4d42" />
   <Project Path="Praktika-1-2-3-4-5.vcxproj" Id="eddd0c14-ccc5-49ab-a170-69764430f339" />
 </Solution>
