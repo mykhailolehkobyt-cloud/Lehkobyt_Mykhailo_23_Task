@@ -34,11 +34,26 @@ int main() {
     while (getline(inputFile,currentSentance))
     {
         int currentWordCount = CountWords(currentSentance);
-        cout << "Речення: " << currentSentance << "' | Слів: " << currentWordCount << endl;
+        cout << "Речення = " << currentSentance << "| Слів = " << currentWordCount << endl;
 
         if (currentWordCount > maxWordCount) {
             maxWordCount = currentWordCount;
             longestSentence = currentSentance;
         }
+
     }
+
     inputFile.close();
+    ofstream outputFile("output.txt");
+
+    if (!outputFile.is_open()) {
+        cout << "Не вдалося відкрити файл " << endl;
+        return 1;
+    }
+    outputFile << "Кількість слів в найдовшому реченні " << maxWordCount << endl;
+    outputFile << longestSentence << endl;
+
+    outputFile.close();
+
+    return 0;
+}
