@@ -113,19 +113,20 @@ void asinhron(int arr[], int first, int last)
 			n--;
 		}
 	}
-	if (last - first > 10000);
-	{
-		future<void> left_half;
-	}
-	if (first < n)
+	if (last - first > 10000)
 	{
 		auto left_half = std::async(std::launch::async, asinhron, arr, first, n);
-	}
-	if (k < last)
-	{
-		asinhron(arr, k, last);
+
+
+		if (k < last)
+		{
+			asinhron(arr, k, last);
+		}
+		left_half.wait();
+
 	}
 }
+
 
 
 void GenerateArray(int arr[], int size)
@@ -139,6 +140,30 @@ void GenerateArray(int arr[], int size)
 
 	}
 }
+
+int BinarySearch (int arr[] , int size, int target)
+{
+		int left = 0;
+		int right = size - 1;
+
+		while (left <= right) {
+			int mid = left + (right - left) / 2;
+
+			if (arr[mid] == target) {
+				return mid;
+			}
+
+			if (arr[mid] < target) {
+				left = mid + 1;
+			}
+			else {
+				right = mid - 1;
+			}
+		}
+
+		return -1;
+	}
+
 
 int main()
 {
@@ -182,6 +207,19 @@ int main()
 		delete[] dinamik;
 		chrono::duration<double, milli> time_taken = end - start;
 		cout << "Час сортування " << time_taken.count() << " мс" << endl;
+		int target;
+		cout << "Введіть число, яке хочете знайти у цьому масиві " << endl;
+		cin >> target;
+
+		int foundIndex = BinarySearch(dinamik, currentsize, target);
+
+		if (foundIndex != -1) {
+			cout << "[УСПІХ] Число " << target << " знайдено! Його індекс у відсортованому масиві " << foundIndex << endl;
+		}
+		else {
+			cout << "[ПОМИЛКА] Число " << target << " у масиві відсутнє." << endl;
+		}
+		delete[] dinamik;
 	}
 
 

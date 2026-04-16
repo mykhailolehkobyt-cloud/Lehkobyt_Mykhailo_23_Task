@@ -1,1 +1,4 @@
-﻿  Praktika-1-2-3-4-5.vcxproj -> C:\Users\mixol\source\repos\Praktika-public\Praktika-1-2-3-4-5\x64\Debug\Praktika-1-2-3-4-5.exe
+﻿  Praktika-1-2-3-4-5.cpp
+C:\Users\mixol\source\repos\Praktika-public\Praktika-1-2-3-4-5\Praktika-1-2-3-4-5.cpp(172,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  LINK : C:\Users\mixol\source\repos\Praktika-public\Praktika-1-2-3-4-5\x64\Debug\Praktika-1-2-3-4-5.exe not found or not built by the last incremental link; performing full link
+  Praktika-1-2-3-4-5.vcxproj -> C:\Users\mixol\source\repos\Praktika-public\Praktika-1-2-3-4-5\x64\Debug\Praktika-1-2-3-4-5.exe
