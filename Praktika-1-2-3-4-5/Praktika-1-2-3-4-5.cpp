@@ -5,17 +5,17 @@ using namespace std;
 #include <iomanip>
 #include <locale>
 
-void  GenerateMatrix(vector<vector<double>>& mat, int N)
+void  GenerateMatrix(int** mat, int N)
 {
     srand(time(0));
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N; j++) {
-            mat[i][j] = rand() % 19 - 9;
+            mat[i][j] = rand() % 67 - 33 ;
         }
     }
 }
 
-void PrintMatrix(const vector<vector<double>>& mat, int N)
+void PrintMatrix(int** mat, int N)
 {
     cout << "--- Матриця " << N << "x" << N << " ---" << endl;
     for (int i = 0; i < N; i++) {
@@ -27,7 +27,7 @@ void PrintMatrix(const vector<vector<double>>& mat, int N)
 }
 
 
-double average(const vector<vector<double>>& mat, int N)
+double average(int** mat, int N)
 {
     double suma = 0;
     int count = 0;
@@ -51,27 +51,29 @@ double average(const vector<vector<double>>& mat, int N)
 }
 
 
-double Sector8(vector<vector<double>>& mat, int N, double avg)
+void ProcessSectors(int** mat, int N, double avg)
 {
-    double sector3 = 0;
+    int countSector3 = 0;
+    int countSector8 = 0;
 
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N; j++) {
 
-            if (j > i && i + j > N - 1) {
-                if (mat[i][j] > 0) {
-
-                    sector3++;
+            if (j >= i && i + j > N - 1) {
+                if (mat[i][j] > 0) { 
+                    countSector3++;
                 }
             }
-            if (i > j)
-            {
-                mat[i][j] = avg;
+
+            if (i > j) {
+                countSector8++;
+                mat[i][j] = (int)avg; 
             }
         }
     }
-    cout << "Кількість натуральних чисел у Секторі 3 " << sector3 << endl;
-    return 0;
+
+    cout << "Кількість натуральних чисел у Секторі 3 =: " << countSector3 << endl;
+    cout << "Кількість елементів у Секторі 8= " << countSector8 << endl;
 }
 
 
@@ -84,14 +86,17 @@ int main()
     int N;
     cout << "Введіть розмір матриці =)";
     cin >> N;
-    vector<vector<double>> matrix(N, vector<double>(N));
+    int** matrix = new int* [N];
+    for (int i = 0; i < N; i++) {
+        matrix[i] = new int[N];
+    }
     GenerateMatrix(matrix, N);
     PrintMatrix(matrix, N);
     double averige = average(matrix, N);
     cout << "Середнє арифметичне додатних чисел " << averige << endl << endl;
 
-    Sector8(matrix, N, averige);
-    cout << "\nМатриця ПІСЛЯ обробки секторів:\n";
+    ProcessSectors(matrix, N, averige);
+    cout << "Матриця ПІСЛЯ обробки секторів"<< endl;
     PrintMatrix(matrix, N);
     return 0;
 }
