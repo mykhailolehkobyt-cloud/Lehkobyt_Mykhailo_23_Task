@@ -1,7 +1,6 @@
 ﻿
 #include <iostream>
 using namespace std;
-#include <vector>
 #include <iomanip>
 #include <locale>
 
@@ -72,8 +71,8 @@ void ProcessSectors(int** mat, int N, double avg)
         }
     }
 
-    cout << "Кількість натуральних чисел у Секторі 3 =: " << countSector3 << endl;
-    cout << "Кількість елементів у Секторі 8= " << countSector8 << endl;
+    cout << "Кількість натуральних чисел у Секторі 3 = " << countSector3 << endl;
+    cout << "Кількість елементів у Секторі 8 = " << countSector8 << endl;
 }
 
 
