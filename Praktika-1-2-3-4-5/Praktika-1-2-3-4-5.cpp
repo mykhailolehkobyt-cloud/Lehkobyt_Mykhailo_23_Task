@@ -204,7 +204,6 @@ int main()
 		}
 		auto end = chrono::high_resolution_clock::now();
 		PrintArray(dinamik, currentsize);
-		delete[] dinamik;
 		chrono::duration<double, milli> time_taken = end - start;
 		cout << "Час сортування " << time_taken.count() << " мс" << endl;
 		int target;
