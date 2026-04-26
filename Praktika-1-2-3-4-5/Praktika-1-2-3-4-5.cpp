@@ -1,52 +1,119 @@
-﻿#include <cmath>
-#include <iostream>
+﻿#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <windows.h>
 
-double Getsum(double arr[], int size)
+using namespace std;
+
+struct Objekt
 {
-	double sumabs = 0;
-	for (int i = 0; i < size; i++)
+	string surname;
+	string name;
+	int reviews;
+	double salary;
+	string shop;
+};
+void AddObjekt()
+{
+	Objekt s;
+	cout << "Введіть прізвище" << endl;
+	cin >> s.surname;
+	cout << "Введіть ім'я" << endl;
+	cin >> s.name;
+	cout << "Введіть відгуки" << endl;
+	cin >> s.reviews;
+	cout << "Введіть магазин" << endl;
+	cin >> s.shop;
+	cout << "Введіть ЗП" << endl;
+	cin >> s.salary;
+	ofstream file("Objekt.txt", ios::app);
+	if (file.is_open())
 	{
-		sumabs += fabs(arr[i]);
+		file << s.surname << " " << s.name << " " << s.reviews << " " << s.salary << " " << s.shop << endl;
+		file.close();
+		cout << "Данні додані в файл" << endl;
 	}
-	return sumabs;
+	else {
+		cout << "" << endl;
+	}
+
 }
 
-double GetProductOfFractions(double arr[], int size)
+vector<Objekt> ReadAllObjekt()
 {
-	double sort = 1;
-	for (int i = 0; i < size; i++)
-	{
-		sort = sort * (1.0 / arr[i]);
+	vector<Objekt> ObjektList;
+	ifstream file("Objekt.txt");
+	if (!file.is_open()) {
+		return ObjektList;
 	}
-	return sort;
+
+	Objekt s;
+	{
+		while (file >> s.surname >> s.name >> s.reviews >> s.salary >> s.shop) {
+			ObjektList.push_back(s);
+		}
+
+		file.close();
+		return ObjektList;
+	}
+}
+
+void ShowAllObjekts()
+{
+	vector <Objekt> Objekt = ReadAllObjekt();
+	if (Objekt.empty()) {
+		cout << "Empty";
+		return;
+	}
+	cout << "--- ВСІ ПРОДАВЦІ В БАЗІ ---" << endl;
+	for (const auto& s : Objekt) {
+		cout << "Прізвище: " << s.surname << " | Ім'я: " << s.name
+			<< " | Відгуки: " << s.reviews << " | ЗП: " << s.salary
+			<< " | Магазин: " << s.shop << endl;
+	}
+}
+bool CompareByReviews(const Objekt& a, const Objekt& b) {
+	return a.reviews > b.reviews;
+}
+
+void Top3()
+{
+	{
+		vector<Objekt> Objekt = ReadAllObjekt();
+
+		if (Objekt.empty()) {
+			cout << "Empty" << endl;
+			return;
+		}
+		sort(Objekt.begin(), Objekt.end(), CompareByReviews);
+		cout << "--- ТОП 3 ПРОДАВЦІ ЗА ВІДГУКАМИ ---" << endl;
+		int count = min(3, (int)Objekt.size());
+		for (int i = 0; i < count; i++) {
+			cout << i + 1 << ". " << Objekt[i].surname << " " << Objekt[i].name
+				<< " - Відгуків: " << Objekt[i].reviews << endl;
+		}
+	}
 }
 
 
 
 int main()
 {
-	using namespace std;
-	double A[6] = { -2.3, 6.2, 5.8, -3.4, 7.1, 0.05 };
-	double B[6] = { 3.0, -2.3, 4.1, 2.5, 6.8, 4.5 };
+	SetConsoleCP(65001);
+	SetConsoleOutputCP(65001);
 
-	double X = Getsum(A, 6);
-	double Y = Getsum(B, 6);
+	int choice;
+	while (true) {
+		cout << "1. Додати | 2. Всі | 3. Топ-3 | " << endl << "Вихід 0" << endl << "Обирай" << endl;
+		cin >> choice;
 
-	double a = GetProductOfFractions(A, 6);
-	double b = GetProductOfFractions(B, 6);
-
-	double p = (a + b) / (X - Y);
-	double W;
-
-	if (p > 0)
-	{
-		W = a * X + Y;
+		if (choice == 1) AddObjekt();
+		else if (choice == 2) ShowAllObjekts();
+		else if (choice == 3) Top3();
+		else if (choice == 0) break;
 	}
-	else
-	{
-		W = b * X + Y;
-	}
-	cout << "Result W: " << W << endl;
 
 	return 0;
 }
