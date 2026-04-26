@@ -1,52 +1,59 @@
-﻿#include <cmath>
-#include <iostream>
+﻿#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+using namespace std;
 
-double Getsum(double arr[], int size)
-{
-	double sumabs = 0;
-	for (int i = 0; i < size; i++)
-	{
-		sumabs += fabs(arr[i]);
-	}
-	return sumabs;
+int CountWords(const string& sentence) {
+    stringstream stream(sentence);
+    string word;
+    int count = 0;
+
+    while (stream >> word) {
+        count++;
+    }
+
+    return count;
 }
 
-double GetProductOfFractions(double arr[], int size)
-{
-	double sort = 1;
-	for (int i = 0; i < size; i++)
-	{
-		sort = sort * (1.0 / arr[i]);
-	}
-	return sort;
-}
+int main() {
+    system("chcp 65001 > nul");
 
 
+    ifstream inputFile("input.txt");
 
-int main()
-{
-	using namespace std;
-	double A[6] = { -2.3, 6.2, 5.8, -3.4, 7.1, 0.05 };
-	double B[6] = { 3.0, -2.3, 4.1, 2.5, 6.8, 4.5 };
+    if (!inputFile.is_open())
+    {
+        cout << "Не те ім'я файлу" << endl;
+        return 1;
+    }
+    string currentSentance = "";
+    string longestSentence = "";
+    int maxWordCount = 0;
 
-	double X = Getsum(A, 6);
-	double Y = Getsum(B, 6);
+    while (getline(inputFile, currentSentance))
+    {
+        int currentWordCount = CountWords(currentSentance);
+        cout << "Речення = " << currentSentance << "| Слів = " << currentWordCount << endl;
 
-	double a = GetProductOfFractions(A, 6);
-	double b = GetProductOfFractions(B, 6);
+        if (currentWordCount > maxWordCount) {
+            maxWordCount = currentWordCount;
+            longestSentence = currentSentance;
+        }
 
-	double p = (a + b) / (X - Y);
-	double W;
+    }
 
-	if (p > 0)
-	{
-		W = a * X + Y;
-	}
-	else
-	{
-		W = b * X + Y;
-	}
-	cout << "Result W: " << W << endl;
+    inputFile.close();
+    ofstream outputFile("output.txt");
 
-	return 0;
+    if (!outputFile.is_open()) {
+        cout << "Не вдалося відкрити файл " << endl;
+        return 1;
+    }
+    outputFile << "Кількість слів в найдовшому реченні " << maxWordCount << endl;
+    outputFile << longestSentence << endl;
+
+    outputFile.close();
+
+    return 0;
 }
